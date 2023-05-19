@@ -1,3 +1,8 @@
+package dev.nlovell.change_machine.human;
+
+import dev.nlovell.change_machine.IChangeMachine;
+import dev.nlovell.utils.SumLists;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,12 +12,12 @@ import java.util.List;
 // If using this method to pass change to a cashier, it would mostly work out okay. Good enough for corner-shop usage.
 
 // However, this basic strategy fails to handle cases where you are required to skip a coin in order to achieve the
-// correct pattern. This is why we have a MagicChangeMachine.
+// correct pattern. This is why we have a dev.nlovell.change.magic.MagicChangeMachine.
 public class HumanChangeMachine implements IChangeMachine {
 
     public List<Integer> change(List<Integer> coinsFromPocket, final int costOfItem) {
         final ArrayList<Integer> myCoinsFromPocket = new ArrayList<Integer>(coinsFromPocket);
-        
+
         // Initially sort the change by descending order. Coins fished out of pockets rarely stack up neatly.
         Collections.sort(myCoinsFromPocket, Collections.reverseOrder());
 

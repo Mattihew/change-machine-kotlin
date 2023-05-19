@@ -1,3 +1,6 @@
+package dev.nlovell.change_machine.magic;
+
+import dev.nlovell.change_machine.IChangeMachine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,14 +13,14 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 
-public class HumanChangeMachineTest {
+public class MagicChangeMachineTest {
 
     static IChangeMachine changeMachine;
 
     @BeforeAll
     static void startup() {
         // Change which concrete class used in testing here!
-        changeMachine = new HumanChangeMachine();
+        changeMachine = new MagicChangeMachine();
     }
 
     @Test
@@ -28,9 +31,6 @@ public class HumanChangeMachineTest {
         Assertions.assertEquals(expectedResult, change);
     }
 
-    /**
-     * This test fails! Check the notes in the HumanChangeMachine class as to why.
-     */
     @Test
     void test2() {
         List<Integer> change = changeMachine.change(Arrays.asList(5, 5, 2, 2, 2), 11);

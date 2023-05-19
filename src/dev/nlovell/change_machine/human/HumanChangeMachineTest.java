@@ -1,3 +1,6 @@
+package dev.nlovell.change_machine.human;
+
+import dev.nlovell.change_machine.IChangeMachine;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,14 +13,14 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 
 
-public class MagicChangeMachineTest {
+public class HumanChangeMachineTest {
 
     static IChangeMachine changeMachine;
 
     @BeforeAll
     static void startup() {
         // Change which concrete class used in testing here!
-        changeMachine = new MagicChangeMachine();
+        changeMachine = new HumanChangeMachine();
     }
 
     @Test
@@ -28,6 +31,9 @@ public class MagicChangeMachineTest {
         Assertions.assertEquals(expectedResult, change);
     }
 
+    /**
+     * This test fails! Check the notes in the dev.nlovell.change.human.HumanChangeMachine class as to why.
+     */
     @Test
     void test2() {
         List<Integer> change = changeMachine.change(Arrays.asList(5, 5, 2, 2, 2), 11);
@@ -63,7 +69,7 @@ public class MagicChangeMachineTest {
         } catch (RuntimeException e) {
             Stream<Integer> array = Stream.of(200, 200, 100, 50, 20, 2, 1);
             List<Integer> expectedResult = array.collect(toList());
-            List<Integer> change = new ArrayList<Integer>();
+            List<Integer> change = new ArrayList<>();
             for (String item : e.getMessage().split(",")) {
                 change.add(Integer.decode(item));
             }

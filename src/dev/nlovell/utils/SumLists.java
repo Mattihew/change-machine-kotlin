@@ -1,3 +1,5 @@
+package dev.nlovell.utils;
+
 import java.util.List;
 
 /**

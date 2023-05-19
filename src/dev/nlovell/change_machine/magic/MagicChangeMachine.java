@@ -1,3 +1,8 @@
+package dev.nlovell.change_machine.magic;
+
+import dev.nlovell.change_machine.IChangeMachine;
+import dev.nlovell.utils.SumLists;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +19,7 @@ public class MagicChangeMachine implements IChangeMachine {
         // Avoids side-effects of modifying the original parameter by copying it
         final List<Integer> myCoins = new ArrayList<Integer>(coins);
 
-        // Same reason as the HumanChangeMachine, we need to order these. Just in case someone feeds in a bucket of coins
+        // Same reason as the dev.nlovell.change.human.HumanChangeMachine, we need to order these. Just in case someone feeds in a bucket of coins
         Collections.sort(myCoins, Collections.reverseOrder());
 
         return findCombination(myCoins, amount, 0, new ArrayList<>(), new ArrayList<>());
