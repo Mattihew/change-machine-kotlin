@@ -47,8 +47,8 @@ public class MagicChangeMachine implements IChangeMachine {
 
         // In either case, we clear the current best combination and update it with the values from current
         if (a || b) {
-            // This clear() is necessary because we are holding a copy of the previous run's best combination here, and we want
-            // to replace the values, not append them.
+            // This clear() is necessary because we are holding a copy of the previous run's best combination here, and
+            // we want to replace the values, not append them
             bestCombination.clear();
             bestCombination.addAll(currentCombination);
         }
@@ -57,10 +57,13 @@ public class MagicChangeMachine implements IChangeMachine {
         for (int i = startIndex; i < coins.size(); i++) {
             final int coin = coins.get(i);
             if (coin <= target - currentSum) {
+                // We add the current coin to the currentCombination to investigate how it performs in the current config
                 currentCombination.add(coin);
 
                 //Recursion!
                 findCombination(coins, target, i + 1, currentCombination, bestCombination);
+
+                // Reset the state of the currentCombination back to how we found it, so we can continue to use it
                 currentCombination.remove(currentCombination.size() - 1);
             }
         }
