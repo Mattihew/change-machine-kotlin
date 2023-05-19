@@ -4,6 +4,7 @@ import java.util.List;
 
 public class MagicChangeMachine implements IChangeMachine {
 
+    final SumLists sl = new SumLists();
     public List<Integer> change(List<Integer> coins, int amount) {
         // Same reason as the HumanChangeMachine, we need to order these. Just in case someone feeds in a bucket of coins
         Collections.sort(coins, Collections.reverseOrder());
@@ -13,13 +14,8 @@ public class MagicChangeMachine implements IChangeMachine {
     private List<Integer> findCombination(List<Integer> coins, final int target, int startIndex, List<Integer> currentCombination, List<Integer> bestCombination) {
 
         // This sums the totals from each list object. It should work if it's an ArrayList, LinkedList, or anything else.
-        int currentSum = currentCombination.stream()
-                .mapToInt(Integer::intValue)
-                .sum();
-        // Note: It may be worthwhile extracting these two to a factory, to reduce repetition
-        int bestSum = bestCombination.stream()
-                .mapToInt(Integer::intValue)
-                .sum();
+        final int currentSum = sl.sum(currentCombination);
+        final int bestSum = sl.sum(bestCombination);
 
         // There are two primary ways of determining a better coin match
         // Either it hits the target, and uses fewer coins than the current combination
