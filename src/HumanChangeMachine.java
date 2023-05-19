@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 // This implementation of ChangeMachine fails to meet the specification, but is an approximation using human analogy
@@ -12,8 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HumanChangeMachine implements IChangeMachine {
 
     public List<Integer> change(List<Integer> coinsFromPocket, final int costOfItem) {
-        // This needs to be an AtomicInteger to ensure thread-safe access from within the fromEach lambda function
-        AtomicInteger costRemaining = new AtomicInteger(costOfItem);
+        SumLists sl = new SumLists();
 
         // Initially sort the change by descending order. Coins fished out of pockets rarely stack up neatly.
         Collections.sort(coinsFromPocket, Collections.reverseOrder());
@@ -29,9 +27,8 @@ public class HumanChangeMachine implements IChangeMachine {
         // attempt (5, 5, 2) and then see the extra 2 would be too much. So you could pop entries from the top, and try
         // matching the target by skipping different coins in reverse order.
         coinsFromPocket.forEach((coin) -> {
-            if (costRemaining.get() >= coin) {
+            if (costOfItem - sl.sum(palmedCoins) >= coin) {
                 palmedCoins.add(coin);
-                costRemaining.addAndGet(-coin);
             }
         });
 
