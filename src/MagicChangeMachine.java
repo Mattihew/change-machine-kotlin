@@ -4,8 +4,6 @@ import java.util.List;
 
 public class MagicChangeMachine implements IChangeMachine {
 
-    final SumLists sl = new SumLists();
-
     /**
      * @param coins  A list of integers representing the value on each face of the coin.
      *               Duplicates represent instances of coins.
@@ -37,8 +35,8 @@ public class MagicChangeMachine implements IChangeMachine {
 
 
         // This sums the totals from each list object. It should work if it's an ArrayList, LinkedList, or anything else.
-        final int currentSum = sl.sum(currentCombination);
-        final int bestSum = sl.sum(bestCombination);
+        final int currentSum = SumLists.sum(currentCombination);
+        final int bestSum = SumLists.sum(bestCombination);
 
         // There are two primary ways of determining a better coin match
         // Either it hits the target, and uses fewer coins than the current combination

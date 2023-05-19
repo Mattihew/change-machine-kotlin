@@ -9,7 +9,6 @@ import java.util.List;
 // However, this basic strategy fails to handle cases where you are required to skip a coin in order to achieve the
 // correct pattern. This is why we have a MagicChangeMachine.
 public class HumanChangeMachine implements IChangeMachine {
-    SumLists sl = new SumLists();
 
     public List<Integer> change(List<Integer> coinsFromPocket, final int costOfItem) {
         final ArrayList<Integer> myCoinsFromPocket = new ArrayList<Integer>(coinsFromPocket);
@@ -28,7 +27,7 @@ public class HumanChangeMachine implements IChangeMachine {
         // the extra 2 would be too much. So you could pop entries from the top, and try matching the target by
         // skipping different coins in reverse order.
         myCoinsFromPocket.forEach((coin) -> {
-            if (costOfItem - sl.sum(palmedCoins) >= coin) {
+            if (costOfItem - SumLists.sum(palmedCoins) >= coin) {
                 palmedCoins.add(coin);
             }
         });
