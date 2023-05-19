@@ -13,13 +13,17 @@ public class MagicChangeMachine implements IChangeMachine {
      * @return
      */
     public List<Integer> change(final List<Integer> coins, final int amount) {
+        // Avoids side-effects of modifying the original parameter by copying it
+        final List<Integer> myCoins = new ArrayList<Integer>(coins);
+
         // Same reason as the HumanChangeMachine, we need to order these. Just in case someone feeds in a bucket of coins
-        Collections.sort(coins, Collections.reverseOrder());
-        return findCombination(coins, amount, 0, new ArrayList<>(), new ArrayList<>());
+        Collections.sort(myCoins, Collections.reverseOrder());
+
+        return findCombination(myCoins, amount, 0, new ArrayList<>(), new ArrayList<>());
     }
 
     /**
-     * @param coins              - list of coins
+     * @param coins              - list of coins used throughout all recursions
      * @param target             - target cost
      * @param startIndex         - start index for recursion
      * @param currentCombination - currently tracked combination of coins
@@ -27,6 +31,10 @@ public class MagicChangeMachine implements IChangeMachine {
      * @return
      */
     private List<Integer> findCombination(final List<Integer> coins, final int target, final int startIndex, final List<Integer> currentCombination, final List<Integer> bestCombination) {
+
+        final ArrayList<Integer> myCurrentCombination = new ArrayList<Integer>(currentCombination);
+        final ArrayList<Integer> myBestCombination = new ArrayList<Integer>(bestCombination);
+
 
         // This sums the totals from each list object. It should work if it's an ArrayList, LinkedList, or anything else.
         final int currentSum = sl.sum(currentCombination);
@@ -40,13 +48,14 @@ public class MagicChangeMachine implements IChangeMachine {
         final boolean b = Math.abs(target - currentSum) < Math.abs(target - bestSum);
 
         // In either case, we clear the current best combination and update it with the values from current
-        // This is necessary because this recursive class makes use of list objects by-reference
         if (a || b) {
+            // This clear() is necessary because we are holding a copy of the previous run's best combination here, and we want
+            // to replace the values, not append them.
             bestCombination.clear();
             bestCombination.addAll(currentCombination);
         }
 
-        // Iterate over all the coins we have left to check, and see if that produces a better result
+        // Iterate over all the coins we have left to check, and see if any of those routes produce a better result
         for (int i = startIndex; i < coins.size(); i++) {
             final int coin = coins.get(i);
             if (coin <= target - currentSum) {
@@ -59,6 +68,6 @@ public class MagicChangeMachine implements IChangeMachine {
         }
 
         // I could return null here, but generally I'm against mixed return types; I'd rather use an empty ArrayList here
-        return bestCombination.isEmpty() ? new ArrayList<>() : bestCombination;
+        return bestCombination.isEmpty() ? Collections.emptyList() : bestCombination;
     }
 }
