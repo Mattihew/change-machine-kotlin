@@ -35,12 +35,12 @@ public class MagicChangeMachine implements IChangeMachine {
 
 
         // This sums the totals from each list object. It should work if it's an ArrayList, LinkedList, or anything else.
-        final int currentSum = SumLists.sum(currentCombination);
+        final int currentSum = SumLists.sum(myCurrentCombination);
         final int bestSum = SumLists.sum(bestCombination);
 
         // There are two primary ways of determining a better coin match
         // Either it hits the target, and uses fewer coins than the current combination
-        final boolean a = target - currentSum == 0 && currentCombination.size() < bestCombination.size();
+        final boolean a = target - currentSum == 0 && myCurrentCombination.size() < bestCombination.size();
 
         // Or it has a lower absolute deviation from the target
         final boolean b = Math.abs(target - currentSum) < Math.abs(target - bestSum);
@@ -50,7 +50,7 @@ public class MagicChangeMachine implements IChangeMachine {
             // This clear() is necessary because we are holding a copy of the previous run's best combination here, and
             // we want to replace the values, not append them
             bestCombination.clear();
-            bestCombination.addAll(currentCombination);
+            bestCombination.addAll(myCurrentCombination);
         }
 
         // Iterate over all the coins we have left to check, and see if any of those routes produce a better result
@@ -58,13 +58,13 @@ public class MagicChangeMachine implements IChangeMachine {
             final int coin = coins.get(i);
             if (coin <= target - currentSum) {
                 // We add the current coin to the currentCombination to investigate how it performs in the current config
-                currentCombination.add(coin);
+                myCurrentCombination.add(coin);
 
                 //Recursion!
-                findCombination(coins, target, i + 1, currentCombination, bestCombination);
+                findCombination(coins, target, i + 1, myCurrentCombination, bestCombination);
 
                 // Reset the state of the currentCombination back to how we found it, so we can continue to use it
-                currentCombination.remove(currentCombination.size() - 1);
+                myCurrentCombination.remove(myCurrentCombination.size() - 1);
             }
         }
 
